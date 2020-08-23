@@ -7,11 +7,19 @@
   <tbody>
     <% @posts.each do |post| %>
       <tr>
+      <td>
+      <% if user_signed_in?%>
+      <%= post.user.email%></td>
+      <%else%>
+      <p>Anonymous<p>
+      <%end%>
         <td><%= post.title %></td>
         <td><%= post.body %></td>
+        
         <td><%= link_to 'Show', post %></td>
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
         <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        
       </tr>
     <% end %>
   </tbody>
@@ -19,4 +27,11 @@
 
 <br>
 
+
+<% if user_signed_in?%>
+<%= link_to "Logout", destroy_user_session_path, method: :delete%>
+<%else%>
 <%= link_to 'New Post', new_post_path %>
+<%= link_to "Login", new_user_session_path%>
+<%= link_to "Register", new_user_registration_path%>
+<%end%>
